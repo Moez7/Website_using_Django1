@@ -1,0 +1,51 @@
+>python manage.py runserver
+>python manage.py makemigrations
+>python manage.py sqlmigrate blog 0001
+>python manage.py migrate
+>python manage.py shell
+    >>>from blog.models import Post
+    >>>from django.contrib.auth.models import User
+    >>>User.objects.all()
+    >>>User.objects.filter(username='Moez')
+    >>>User.objects.filter(username='Moez').first()
+    >>>user=User.objects.filter(username='Moez').first()
+    >>>user.id or user.pk
+    >>>Post.objects.all()
+    >>>post_1=Post(title='Blog1', content='First Post Content!', author=user)
+    >>>post_1.save()
+    >>>post_2=Post(title='Blog2', content='Second Post Content!', author_id=user.id)
+    >>>post_2.save()
+    >>>Post.objects.all()
+    >>>post = Post.objects.first()
+    >>>post.content
+    >>>post.date_posted
+    >>>post.author
+    >>>post.author.email
+    >>>user.post_set.all()
+    >>>user.post_set.create(title='Blog 3',content='third Post Content!')
+-user registration(others login and log out):
+>python manage.py startapp users
+
+
+
+Verifing the Profile:  
+python manage.py makemigrations
+>python manage.py migrate
+>python manage.py shell
+    >>>from django.contrib.auth.models import User
+    >>>user=User.objects.filter(username='Moez').first()
+    >>>user.profile
+    >>>user.profile.image
+    >>>user.profile.image.width
+    >>>user.profile.image.url
+
+
+
+>python manage.py shell 
+    >>>import json
+    >>> from blog.models import Post
+    >>>with open('posts.json') as f:
+   ...:     posts_json = json.load(f)
+    >>> for post in posts_json:^M
+   ...:    ...:     post = Post(title=post['title'], content=post['content'],author_id=post['user_id'])
+   ...:     post.save()  
